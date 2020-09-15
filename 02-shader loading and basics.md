@@ -13,7 +13,7 @@ public interface Uniform {
 	public void apply(int shader);
 }
 ```
-The shader class will keep a list of uniforms and a shader id. For readability, I put a method withUniforms because I think it looks slightly cleaner than having it in the constructor, but it's perfectly fine to put that as a constructor argument, too. The use method uses the shader and applies all shader uniforms. The release method stops using it for when you've already rendered the geometry you want with that shader. The getShaderId method is just in the even we need the id number somewhere. Since not every computer supports shaders, it's a good idea to put in a check tp see if shaders are supported and opengl 3.3 (the version of shaders we'll be using) is supported. This isn't usually much of a problem though, since almost all computers nowadays support opengl 3.3, and minecraft requires opengl 4.4 support in its minimum spec.
+The shader class will keep a list of uniforms and a shader id. For readability, I put a method withUniforms because I think it looks slightly cleaner than having it in the constructor, but it's perfectly fine to put that as a constructor argument, too. The use method uses the shader and applies all shader uniforms. The release method stops using it for when you've already rendered the geometry you want with that shader. The getShaderId method is just there in case we need the id number somewhere. Since not every computer supports shaders, it's a good idea to put in a check to see if shaders are supported and opengl 3.3 (the version of shaders we'll be using) is supported. This isn't usually much of a problem though, since almost all computers nowadays support opengl 3.3, and minecraft requires opengl 4.4 support in its minimum spec.
 ```java
 public class Shader {
 
@@ -171,7 +171,7 @@ void main(){
 
 }
 ```
-The vertex shader only really needs to do one thing, which is to transform the input vertex. All we need to do for that is multiply the built in ModelViewProjection matrix with gl_Position and write it to gl_Position. All vertex shaders must write to gl_Position. Now, we also might want to pass data, like texture coordinates and normals, to the fragment shader and do stuff, like sampling a texture, there. This is done with in and out variables. We need to pass the texture coordinate so we can see our nice duck image, so let's use a built in attribute and do that. All out variables are automatically interpolated between vertices when you get them in the fragment shader. That way vertex attributes mix evenly throughout the triangle. Here is the vertex shader code so far.
+The vertex shader only really needs to do one thing, which is to transform the input vertex. All we need to do for that is multiply the built in ModelViewProjection matrix with gl_Vertex and write it to gl_Position. All vertex shaders must write to gl_Position. Now, we also might want to pass data, like texture coordinates and normals, to the fragment shader and do stuff, like sampling a texture, there. This is done with in and out variables. We need to pass the texture coordinate so we can see our nice duck image, so let's use a built in attribute and do that. All out variables are automatically interpolated between vertices when you get them in the fragment shader. That way vertex attributes mix evenly throughout the triangle. Here is the vertex shader code so far.
 ```glsl
 #version 330 compatibility
 
